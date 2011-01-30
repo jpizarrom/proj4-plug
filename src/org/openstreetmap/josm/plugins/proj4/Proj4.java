@@ -25,12 +25,13 @@ public class Proj4 extends Plugin {
 
     private JMenu mMenu;
     private Projection oldProj;
-    private String projCode;
+    private String projCode, defProjCode;
     private int projCodeTo = 0;
 
     public Proj4(PluginInformation info) {
         super(info);
         projCode = ProjectionPROJ4.getProjCode();
+        defProjCode = Main.proj.getClass().getName();
         refreshMenu();
     }
 
@@ -40,7 +41,9 @@ public class Proj4 extends Plugin {
 
         try {
             // toggle projection
-            if (Main.proj.toCode().equals(projCode)) {
+        	if (projCodeTo == -1){
+        		ProjectionPreference.setProjection(defProjCode, null);
+            } else if (Main.proj.toCode().equals(projCode)) {
                 // use JOSM built in to fire Listeners
                 ProjectionPreference.setProjection(oldProj.getClass().getName(), null);
 
@@ -93,7 +96,7 @@ public class Proj4 extends Plugin {
         // toggle menu text based on current projection
         for (int i=0; i< ProjectionPROJ4.allCodes.length; i++){
 	        if (Main.proj.toCode().equalsIgnoreCase(ProjectionPROJ4.allCodes[i][0])) {
-	        	addMenu("wmsmenu.png", projCode, oldProj.toString(), oldProj.toString(), i);
+	        	addMenu("wmsmenu.png", projCode, oldProj.toString(), ProjectionPROJ4.getProjCodeString(i), -1);
 	        } else {
 //	        	addMenu("wmsmenu_off.png", Main.proj.toString(), projCode, ProjectionPROJ4.getProjCodeString());
 	        	addMenu("wmsmenu_off.png", Main.proj.toString(), ProjectionPROJ4.allCodes[i][0], ProjectionPROJ4.getProjCodeString(i), i);
@@ -103,9 +106,9 @@ public class Proj4 extends Plugin {
 //        	addMenu("wmsmenu_off.png", ProjectionPROJ4.allCodes[i][0], ProjectionPROJ4.allCodes[i][0], ProjectionPROJ4.getProjCodeString(i));
     }
     
-    public void addMenu(String icon, String projFrom, String projTo, String projToString, final int i) {
+    public void addMenu(String icon, String projFrom, String projTo, String projString, final int i) {
     	JMenuItem m = new JMenuItem(new
-                JosmAction(tr("set {0}", projToString)
+                JosmAction(tr("set {0}", projString)
                         ,icon
                         ,tr("set projection from {0} to {1}",projFrom ,projTo)
                         , null, false)
@@ -116,7 +119,8 @@ public class Proj4 extends Plugin {
             @Override
             public void actionPerformed(ActionEvent ev) {
             	projCodeTo = proj;
-            	projCode = ProjectionPROJ4.allCodes[proj][0];
+            	if ( projCodeTo >= 0 )
+            		projCode = ProjectionPROJ4.allCodes[proj][0];
                 toggleProjection();
             }
         });
