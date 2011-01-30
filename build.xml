@@ -32,7 +32,7 @@
     <!-- enter the SVN commit message -->
     <property name="commit.message" value="Commit message" />
     <!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
-    <property name="plugin.main.version" value="" />
+    <property name="plugin.main.version" value="3751" />
 
 
     <!--
@@ -43,9 +43,8 @@
     <property name="plugin.build.dir"       value="build"/>
     <property name="plugin.src.dir"         value="src"/>
     <!-- this is the directory where the plugin jar is copied to -->
-    <property name="plugin.dist.dir"        value="../../dist"/>
+    <property name="plugin.dist.dir"        value="dist"/>
     <property name="ant.build.javac.target" value="1.5"/>
-    <property name="plugin.dist.dir"        value="../../dist"/>
     <property name="plugin.jar"             value="${plugin.dist.dir}/${ant.project.name}.jar"/>
 
     <!--
@@ -88,6 +87,7 @@
                 <include name="README" />
                 <include name="LICENSE" />
             </fileset>
+            <zipfileset src="lib/javaproj-1.0.6.jar" />
         </copy>
         <jar destfile="${plugin.jar}" basedir="${plugin.build.dir}">
             <!--
@@ -100,11 +100,11 @@
     -->
             <manifest>
                 <attribute name="Author" value="..."/>
-                <attribute name="Plugin-Class" value="..."/>
+                <attribute name="Plugin-Class" value="org.openstreetmap.josm.plugins.proj4.Proj4"/>
                 <attribute name="Plugin-Date" value="${version.entry.commit.date}"/>
                 <attribute name="Plugin-Description" value="..."/>
                 <attribute name="Plugin-Icon" value="..."/>
-                <attribute name="Plugin-Link" value="..."/>
+                <attribute name="Plugin-Link" value="http://wiki.openstreetmap.org"/>
                 <attribute name="Plugin-Mainversion" value="${plugin.main.version}"/>
                 <attribute name="Plugin-Version" value="${version.entry.commit.revision}"/>
             </manifest>
@@ -120,14 +120,14 @@
     -->
     <target name="revision">
 
-        <exec append="false" output="REVISION" executable="svn" failifexecutionfails="false">
+        <!--<exec append="false" output="REVISION" executable="svn" failifexecutionfails="false">
             <env key="LANG" value="C"/>
             <arg value="info"/>
-            <arg value="--xml"/>
+            <arg value="- -xml"/>
             <arg value="."/>
         </exec>
         <xmlproperty file="REVISION" prefix="version" keepRoot="false" collapseAttributes="true"/>
-        <delete file="REVISION"/>
+        <delete file="REVISION"/>-->
     </target>
 
     <!--

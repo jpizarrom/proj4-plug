@@ -79,25 +79,43 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 	@Override
 	public String getCacheDirectoryName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "proj4";
 	}
 
 	@Override
 	public double getDefaultZoomInPPD() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 10;
 	}
 
 	@Override
 	public Bounds getWorldBoundsLatLon() {
 		// TODO Auto-generated method stub
-		return null;
+		Point2D.Double c = new Point2D.Double();
+		Point2D.Double d = new Point2D.Double();
+		c.x = -90.0;
+		c.y = -180.0;
+		d.x = 90.0;
+		d.y= 180.0;
+		//System.out.println("From " + c.x + " " + c.y);
+		projection.transform( c, c );
+		projection.transform( d, d );
+		return new Bounds(new LatLon(c.x, c.y), new LatLon(d.x, d.y));
 	}
 
 	@Override
 	public String toCode() {
 		// TODO Auto-generated method stub
-		return null;
+		return projCode;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return tr(projCode);
+	}
+
+	public static String getProjCode() {
+		return projCode;
+	}
 }
