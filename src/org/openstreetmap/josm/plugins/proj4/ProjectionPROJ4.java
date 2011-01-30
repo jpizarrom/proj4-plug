@@ -50,5 +50,54 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 		projection.inverseTransform( c, c );
 		//System.out.println("InvTo " + c.x + " " + c.y);
 		return new LatLon(c.y, c.x);
+	}
+
+	@Override
+	public Collection<String> getPreferences(JPanel arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<String> getPreferencesFromCode(String arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPreferences(Collection<String> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setupPreferencePanel(JPanel arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getCacheDirectoryName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getDefaultZoomInPPD() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Bounds getWorldBoundsLatLon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String toCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

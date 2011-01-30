@@ -27,7 +27,7 @@
 **
 **
 -->
-<project name="myPluginName" default="dist" basedir=".">
+<project name="porj4" default="dist" basedir=".">
 
     <!-- enter the SVN commit message -->
     <property name="commit.message" value="Commit message" />
@@ -39,7 +39,7 @@
       ************************************************
       ** should not be necessary to change the following properties
      -->
-    <property name="josm"                   location="../../core/dist/josm-custom.jar"/>
+    <property name="josm"                   location="/mnt/disk/projects/maps/josm-tested.jar:lib/javaproj-1.0.6.jar"/>
     <property name="plugin.build.dir"       value="build"/>
     <property name="plugin.src.dir"         value="src"/>
     <!-- this is the directory where the plugin jar is copied to -->
