@@ -9,3 +9,15 @@ Readme for your plugin
       you can pick the license that is used for JOSM ("GPL v2 or later").
       
     * Notes for future developers, if needed.
+
+A plugin for JOSM that sets current projection to
+
+AUTHORS and LICENSE:
+
+This plugin has been created by Fichtennadel (soskifub+josm at gmail), but depends heavily on 
+jhlabs Java Map Projection Library (http://www.jhlabs.com/java/maps/proj/), which is licensed
+under under the Apache License, Version 2.0.
+
+see http://wiki.openstreetmap.org/wiki/WikiProject_Austria/geoimage.at#JOSM_Plugin for details
+
+This plugin is licensed under the GNU GPL v3 or later.

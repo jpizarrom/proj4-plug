@@ -48,10 +48,10 @@ public class Proj4 extends Plugin {
                 //uploadHook = null;
             } else {
                 oldProj = Main.proj;
-                Main.proj = new ProjectionEPSG31287();
+                Main.proj = new ProjectionPROJ4();
                 //TODO use JOSM built in to fire Listeners, does not work currently due to classnotfound ex
                 //     ProjectionPreference.setProjection(ProjectionEPSG31287.class.getName(), null);
-                UploadAction.registerUploadHook(new EPSG31287UploadHook(this));
+                UploadAction.registerUploadHook(new PROJ4UploadHook(this));
             }
             // toggle Menu
             refreshMenu();
@@ -85,7 +85,7 @@ public class Proj4 extends Plugin {
         MainMenu menu = Main.main.menu;
 
         if (mMenu == null)
-            mMenu = menu.addMenu(marktr("EPSG31287"), KeyEvent.VK_S, menu.defaultMenuPos, null);
+            mMenu = menu.addMenu(marktr("PROJ4"), KeyEvent.VK_S, menu.defaultMenuPos, null);
         else
             mMenu.removeAll();
         // toggle menu text based on current projection
