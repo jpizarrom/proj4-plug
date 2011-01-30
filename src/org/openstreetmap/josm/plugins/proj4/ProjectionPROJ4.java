@@ -23,9 +23,25 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 	private double dy = 0.0;
 	public static int toCode = 0; 
 	public static String[][] allCodes = new String[][] {
+		/* Chile */
 		{"epsg:32719","WGS 84 / UTM zone 19S"},
 		{"epsg:32718", "WGS 84 / UTM zone 18S"},
-		{"epsg:24878", "PSAD56 / UTM zone 18S"}
+		{"epsg:24878", "PSAD56 / UTM zone 18S"},
+		
+		/* Colombia*/
+		{"epsg:3114"," MAGNA-SIRGAS / Colombia Far West zone"},
+		{"epsg:3115"," MAGNA-SIRGAS / Colombia West zone"},
+		{"epsg:3116"," MAGNA-SIRGAS / Colombia Bogota zone"},
+		{"epsg:3117"," MAGNA-SIRGAS / Colombia East Central zone"},
+		{"epsg:3118"," MAGNA-SIRGAS / Colombia East zone"},
+		{"epsg:21891"," Bogota 1975 / Colombia West zone"},
+		{"epsg:21892"," Bogota 1975 / Colombia Bogota zone"},
+		{"epsg:21893"," Bogota 1975 / Colombia East Central zone"},
+		{"epsg:21894"," Bogota 1975 / Colombia East"},
+		{"epsg:21896"," Bogota 1975 / Colombia West zone"},
+		{"epsg:21897"," Bogota 1975 / Colombia Bogota zone"},
+		{"epsg:21898"," Bogota 1975 / Colombia East Central zone"},
+		{"epsg:21899"," Bogota 1975 / Colombia East"}
 			};
 	private static double[][] allBounds = new double[][] {
 		{-72.0000, -80.0000, -66.0000, 0.0000 },
@@ -112,6 +128,11 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 	@Override
 	public Bounds getWorldBoundsLatLon() {
 		// TODO Auto-generated method stub
+		if ( toCode >= allBounds.length )
+			return new Bounds(
+					new LatLon(-90.0, -180.0),
+					new LatLon(90.0, 180.0));
+		
 		return new Bounds(new LatLon(allBounds[toCode][1], allBounds[toCode][0]), new LatLon(allBounds[toCode][3], allBounds[toCode][2]));
 	}
 
