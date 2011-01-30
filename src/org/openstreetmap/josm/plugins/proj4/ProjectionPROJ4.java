@@ -21,13 +21,34 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 
 	private double dx = 0.0;
 	private double dy = 0.0;
-	private final static String projCode = "epsg:3785";
+	public static int toCode = 0; 
+	public static String[][] allCodes = new String[][] {
+		{"epsg:32719","WGS 84 / UTM zone 19S"},
+		{"epsg:32718", "WGS 84 / UTM zone 18S"},
+		{"epsg:24878", "PSAD56 / UTM zone 18S"}
+			};
+	private static double[][] allBounds = new double[][] {
+		{-72.0000, -80.0000, -66.0000, 0.0000 },
+		{-78.0000, -80.0000, -72.0000, 0.0000 },
+		{-78.0000, -49.0000, -72.0000, 0.0000 }
+			};
+//	private static String projCode = allCodes[toCode][0]; 
 	
 	private final com.jhlabs.map.proj.Projection projection;
 
 	public ProjectionPROJ4() {
 		super();
-		projection = com.jhlabs.map.proj.ProjectionFactory.getNamedPROJ4CoordinateSystem(projCode);
+		projection = com.jhlabs.map.proj.ProjectionFactory.getNamedPROJ4CoordinateSystem(allCodes[toCode][0]);
+	}
+//	public ProjectionPROJ4(String proj) {
+//		super();
+//		projection = com.jhlabs.map.proj.ProjectionFactory.getNamedPROJ4CoordinateSystem(proj);
+//	}
+	public ProjectionPROJ4(int proj) {
+		super();
+		toCode = proj;
+		projection = com.jhlabs.map.proj.ProjectionFactory.getNamedPROJ4CoordinateSystem(allCodes[toCode][0]);
+		
 	}
 	
 	@Override
@@ -79,43 +100,41 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 	@Override
 	public String getCacheDirectoryName() {
 		// TODO Auto-generated method stub
-		return "proj4";
+		return allCodes[toCode][0].replace(":", "_");
 	}
 
 	@Override
 	public double getDefaultZoomInPPD() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 0.009;
 	}
 
 	@Override
 	public Bounds getWorldBoundsLatLon() {
 		// TODO Auto-generated method stub
-		Point2D.Double c = new Point2D.Double();
-		Point2D.Double d = new Point2D.Double();
-		c.x = -90.0;
-		c.y = -180.0;
-		d.x = 90.0;
-		d.y= 180.0;
-		//System.out.println("From " + c.x + " " + c.y);
-		projection.transform( c, c );
-		projection.transform( d, d );
-		return new Bounds(new LatLon(c.x, c.y), new LatLon(d.x, d.y));
+		return new Bounds(new LatLon(allBounds[toCode][1], allBounds[toCode][0]), new LatLon(allBounds[toCode][3], allBounds[toCode][2]));
 	}
 
 	@Override
 	public String toCode() {
 		// TODO Auto-generated method stub
-		return projCode;
+		return allCodes[toCode][0];
+		
 	}
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return tr(projCode);
+		return tr(toCode() +" "+allCodes[toCode][1]);
 	}
 
 	public static String getProjCode() {
-		return projCode;
+		return allCodes[toCode][0];
+	}
+//	public static String getProjCodeString() {
+//		return tr(projCode +" "+allCodes[defaultCode][1]);
+//	}
+	public static String getProjCodeString(int i) {
+		return tr(allCodes[i][0] +" "+allCodes[i][1]);
 	}
 }

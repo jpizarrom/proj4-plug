@@ -16,9 +16,9 @@ public class PROJ4UploadHook implements UploadHook {
 
     @Override
     public boolean checkUpload(APIDataSet arg0) {
-        if (Main.proj.toCode().equals(ProjectionPROJ4.getProjCode())) {
-            plugin.toggleProjection();
-        }
+//        if (Main.proj.toCode().equals(ProjectionPROJ4.getProjCode())) {
+//            plugin.toggleProjection();
+//        }
         return true;
     }
 

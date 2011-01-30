@@ -25,7 +25,8 @@ public class Proj4 extends Plugin {
 
     private JMenu mMenu;
     private Projection oldProj;
-    private final String projCode;
+    private String projCode;
+    private int projCodeTo = 0;
 
     public Proj4(PluginInformation info) {
         super(info);
@@ -48,7 +49,7 @@ public class Proj4 extends Plugin {
                 //uploadHook = null;
             } else {
                 oldProj = Main.proj;
-                Main.proj = new ProjectionPROJ4();
+                Main.proj = new ProjectionPROJ4(projCodeTo);
                 //TODO use JOSM built in to fire Listeners, does not work currently due to classnotfound ex
                 //     ProjectionPreference.setProjection(ProjectionEPSG31287.class.getName(), null);
                 UploadAction.registerUploadHook(new PROJ4UploadHook(this));
@@ -66,6 +67,7 @@ public class Proj4 extends Plugin {
                             JOptionPane.INFORMATION_MESSAGE
             );
         } catch (final Exception e) {
+        	e.printStackTrace();
             JOptionPane.showMessageDialog(
                     Main.parent,
                     tr("The projection {0} could not be activated. Using Mercator", projCode),
@@ -89,33 +91,36 @@ public class Proj4 extends Plugin {
         else
             mMenu.removeAll();
         // toggle menu text based on current projection
-        if (Main.proj.toCode().equals(projCode)) {
-            mMenu.add(new JMenuItem(new
-                    JosmAction(tr("set {0}",oldProj.toString())
-                            ,"wmsmenu.png"
-                            ,tr("set projection from {0} to {1}",projCode,oldProj.toString())
-                            , null, false)
-            {
-                private static final long serialVersionUID = 7610502878925107647L;
-                @Override
-                public void actionPerformed(ActionEvent ev) {
-                    toggleProjection();
-                }
-            }));
-        } else {
-            mMenu.add(new JMenuItem(new
-                    JosmAction(tr("set {0}",projCode)
-                            ,"wmsmenu_off.png"
-                            ,tr("set projection from {0} to {1}",Main.proj.toString() ,projCode)
-                            , null, false)
-            {
-                private static final long serialVersionUID = 7610502878925107646L;
-                @Override
-                public void actionPerformed(ActionEvent ev) {
-                    toggleProjection();
-                }
-            }));
+        for (int i=0; i< ProjectionPROJ4.allCodes.length; i++){
+	        if (Main.proj.toCode().equalsIgnoreCase(ProjectionPROJ4.allCodes[i][0])) {
+	        	addMenu("wmsmenu.png", projCode, oldProj.toString(), oldProj.toString(), i);
+	        } else {
+//	        	addMenu("wmsmenu_off.png", Main.proj.toString(), projCode, ProjectionPROJ4.getProjCodeString());
+	        	addMenu("wmsmenu_off.png", Main.proj.toString(), ProjectionPROJ4.allCodes[i][0], ProjectionPROJ4.getProjCodeString(i), i);
+	        }
         }
+//        for (int i=0; i< ProjectionPROJ4.allCodes.length; i++)
+//        	addMenu("wmsmenu_off.png", ProjectionPROJ4.allCodes[i][0], ProjectionPROJ4.allCodes[i][0], ProjectionPROJ4.getProjCodeString(i));
+    }
+    
+    public void addMenu(String icon, String projFrom, String projTo, String projToString, final int i) {
+    	JMenuItem m = new JMenuItem(new
+                JosmAction(tr("set {0}", projToString)
+                        ,icon
+                        ,tr("set projection from {0} to {1}",projFrom ,projTo)
+                        , null, false)
+        {
+    		public int proj = i;
+//    		public void setProjCodeTo(){}
+//            private static final long serialVersionUID = 7610502878925107646L;
+            @Override
+            public void actionPerformed(ActionEvent ev) {
+            	projCodeTo = proj;
+            	projCode = ProjectionPROJ4.allCodes[proj][0];
+                toggleProjection();
+            }
+        });
+        mMenu.add(m);
     }
 
 }
