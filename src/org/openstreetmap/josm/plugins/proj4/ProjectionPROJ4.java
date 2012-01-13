@@ -108,7 +108,7 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 	}
 
 	@Override
-	public void setupPreferencePanel(JPanel arg0) {
+	public void setupPreferencePanel(JPanel arg0, ActionListener arg1) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -157,5 +157,10 @@ public class ProjectionPROJ4 implements org.openstreetmap.josm.data.projection.P
 //	}
 	public static String getProjCodeString(int i) {
 		return tr(allCodes[i][0] +" "+allCodes[i][1]);
+	}
+	@Override
+	public String[] allCodes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
